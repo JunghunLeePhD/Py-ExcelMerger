@@ -17,20 +17,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11' 
 
       - name: Install dependencies
         run: |
           pip install pandas openpyxl pyinstaller
 
-      - name: Build with PyInstaller
+      - name: Build with PyInstaller (OneDir Mode)
         run: |
-          pyinstaller --noconfirm --onefile --clean --name "ExcelManipulator" main.py
+          pyinstaller --noconfirm --onedir --clean --name "ExcelManipulator" main.py
 
-      - name: Make Executable & Zip
+      - name: Prepare Distribution Folder
+        run: |
+          mkdir -p dist/ExcelManipulator/assets
+
+      - name: Zip the App Folder
         run: |
           cd dist
-          chmod +x ExcelManipulator
           zip -r ExcelManipulator_macOS.zip ExcelManipulator
 
       - name: Create Release
@@ -39,6 +42,6 @@ jobs:
           files: dist/ExcelManipulator_macOS.zip
           tag_name: "v${{ github.run_number }}"
           name: "Release ${{ github.run_number }}"
-          body: "Auto-generated build for MacOS. Unzip and double-click to run."
+          body: "Faster startup build (OneDir). Unzip and open the folder to run."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
