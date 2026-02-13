@@ -2,13 +2,10 @@ import pandas as pd
 from pathlib import Path
 import os
 
-def creat_folder(folder_path: str, escape = True):
+def creat_folder(folder_path: str):
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
         print(f"📁 Created folder: {folder_path}")
-        if escape:
-            print("Please put your Excel files in that folder and run the script again.")
-            return
 
 
 def show(s: str):

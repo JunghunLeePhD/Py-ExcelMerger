@@ -4,13 +4,11 @@ import os
 from lib.utils import show, creat_folder, clear_lines, read_excel_files
 
 def main():
-    # Determine if running as a script or a frozen exe
     if getattr(sys, 'frozen', False):
         application_path = os.path.dirname(sys.executable)
     else:
         application_path = os.path.dirname(os.path.abspath(__file__))
 
-    # Force the current working directory to the app's location
     os.chdir(application_path)
 
     assets_path = "./assets"
@@ -67,7 +65,7 @@ def main():
     output_path = "./output"
     save_confirm = input(f"Save in {output_path} as csv? (y/n): ").strip().lower()
     if save_confirm == 'y':
-        creat_folder(output_path, False)
+        creat_folder(output_path)
         df_result.to_csv(f"{output_path}/result.csv", index=False)
         print("✅ Success! File saved.")
     else:
