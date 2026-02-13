@@ -5,3 +5,7 @@
 /outputs
 *.xlsx
 *.csv
+
+/build
+/dist
+*.spec

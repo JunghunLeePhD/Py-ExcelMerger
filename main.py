@@ -1,8 +1,18 @@
 import pandas as pd
+import sys
 import os
 from lib.utils import show, creat_folder, clear_lines, read_excel_files
 
 def main():
+    # Determine if running as a script or a frozen exe
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+    else:
+        application_path = os.path.dirname(os.path.abspath(__file__))
+
+    # Force the current working directory to the app's location
+    os.chdir(application_path)
+
     assets_path = "./assets"
     creat_folder(assets_path)
 
@@ -12,7 +22,7 @@ def main():
     try:
         df = read_excel_files(assets_path)
         if df is None or df.empty:
-            print("❌ No data found. Please ensure Excel files are in the /assets/ folder.")
+            print(f"❌ No data found. Please ensure Excel files are in the {assets_path} folder.")
             return
     except Exception as e:
         print(f"❌ Error reading files: {e}")
