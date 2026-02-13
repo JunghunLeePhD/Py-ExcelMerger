@@ -1,6 +1,7 @@
 import pandas as pd
 import sys
 import os
+from datetime import datetime
 from lib.utils import show, creat_folder, clear_lines, read_excel_files
 
 def main():
@@ -63,11 +64,13 @@ def main():
     print("-" * 30)
 
     output_path = "./output"
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    file_name = f"{timestamp}.csv"
     save_confirm = input(f"Save in {output_path} as csv? (y/n): ").strip().lower()
     if save_confirm == 'y':
         creat_folder(output_path)
-        df_result.to_csv(f"{output_path}/result.csv", index=False)
-        print("✅ Success! File saved.")
+        df_result.to_csv(f"{output_path}/{file_name}", index=False)
+        print(f"✅ Success! File saved as {file_name} in {output_path}.")
     else:
         print("❌ Save cancelled.")
 
