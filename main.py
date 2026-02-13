@@ -15,6 +15,7 @@ def main():
 
     assets_path = "./assets"
     creat_folder(assets_path)
+    input(f"Presee Enter if excel files are in {assets_path}")
 
     print("\033c", end="") 
     print(f"--- 📂 Excel Processor: Reading from {assets_path} ---")
