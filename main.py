@@ -66,7 +66,7 @@ def main():
     output_path = "./output"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     file_name = f"{timestamp}.csv"
-    save_confirm = input(f"Save in {output_path} as csv? (y/n): ").strip().lower()
+    save_confirm = input(f"Save in {output_path} as csv? [Y/n]: ").strip().lower() or 'y'
     if save_confirm == 'y':
         creat_folder(output_path)
         df_result.to_csv(f"{output_path}/{file_name}", index=False)
