@@ -51,8 +51,8 @@ This project is developed using **Python 3.11**. Follow these steps to set up yo
 ### 1. Clone the Repository
 
 ```bash
-git clone 
-cd Py-Excel
+git clone git@github.com:JunghunLeePhD/Py-ExcelMerger.git
+cd Py-ExcelMerger
 ```
 
 ### **2. Set up Virtual Environment**
