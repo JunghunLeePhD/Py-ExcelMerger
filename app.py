@@ -42,6 +42,24 @@ def process_files(files, agg_cols,  group_col):
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
     df_combined = combine_files(files)
 
+    if not agg_cols:
+        return (
+            gr.update(visible=False),
+            gr.update(visible=False),
+            gr.update(visible=False),
+            gr.update(visible=True)
+        )
+
+    if len(agg_cols) == 1:
+        df_result = df_combined[agg_cols]
+        df_result.to_csv(temp_file.name, index=False)
+        return (
+            temp_file.name,
+            df_result,
+            gr.update(visible=False),
+            gr.update(visible=True)
+        )
+
     agg_cols_without_group_col = list(set(agg_cols) - set([group_col]))
     agg_cols_without_duplicate = agg_cols_without_group_col + [group_col]
     df_combined = df_combined[agg_cols_without_duplicate]
@@ -54,7 +72,13 @@ def process_files(files, agg_cols,  group_col):
             agg_dict[cname] = lambda x: x.mode(
             )[0] if not x.mode().empty else None
 
-    df_result = df_combined.groupby([group_col]).agg(agg_dict).reset_index()
+    try:
+        df_result = df_combined.groupby(
+            [group_col]).agg(agg_dict).reset_index()
+
+    except Exception as e:
+        raise gr.Error(f"Aggregation Failed: {str(e)}")
+
     df_result.to_csv(temp_file.name, index=False)
 
     return (
