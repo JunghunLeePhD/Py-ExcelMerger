@@ -2,7 +2,6 @@ name: Sync to Hugging Face Hub
 on:
   push:
     branches: [main]
-
   workflow_dispatch:
 
 jobs:
@@ -17,4 +16,5 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git push https://JunghunleePhD:$HF_TOKEN@huggingface.co/spaces/JunghunLeePhD/Py-ExcelManipulator main
+          # Added --force to overwrite the remote history
+          git push --force https://JunghunLeePhD:$HF_TOKEN@huggingface.co/spaces/JunghunLeePhD/Py-ExcelManipulator main
