@@ -1,3 +1,14 @@
+---
+title: Excel Manipulator
+emoji: 📊
+colorFrom: green
+colorTo: blue
+sdk: gradio
+sdk_version: 4.0.0
+app_file: app.py
+pinned: false
+---
+
 # 📊 Excel Manipulator
 
 A Python-based command-line tool that automates the processing, merging, and aggregation of Excel data. It allows users to interactively select grouping columns and data columns to generate a summarized report.
