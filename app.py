@@ -3,11 +3,17 @@ import pandas as pd
 import tempfile
 
 
+def combine_files(files):
+    dfs = [pd.read_excel(file.name) for file in files]
+    return pd.concat(dfs, ignore_index=True)
+
+
 def process_files(files):
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
+    df_combined = combine_files(files)
     return (
         temp_file.name,
-        files,
+        df_combined,
         gr.update(visible=False),
         gr.update(visible=True)
     )
