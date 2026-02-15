@@ -135,7 +135,11 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         gr.Markdown("### Step 2/2: Preview and Download Results")
         reset_btn = gr.Button("🔄 Start Over")
         download_btn = gr.File(label="Download CSV")
-        output_df = gr.DataFrame(label="Preview Result", interactive=False)
+        output_df = gr.DataFrame(
+            label="Preview Result",
+            interactive=False,
+            max_height=1200
+        )
 
     file_input.upload(
         fn=load_columns,
