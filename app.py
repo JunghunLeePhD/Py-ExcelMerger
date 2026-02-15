@@ -1,5 +1,17 @@
 import gradio as gr
 import pandas as pd
+import tempfile
+
+
+def process_files(files):
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
+    return (
+        temp_file.name,
+        files,
+        gr.update(visible=False),
+        gr.update(visible=True)
+    )
+
 
 with gr.Blocks(title="Excel Manipulator") as demo:
     gr.Markdown("# 📊 Excel Manipulator")
@@ -23,6 +35,18 @@ with gr.Blocks(title="Excel Manipulator") as demo:
             download_btn = gr.File(label="Download CSV")
             reset_btn = gr.Button("🔄 Start Over")
         output_df = gr.DataFrame(label="Preview Result", interactive=False)
+
+    process_btn.click(
+        fn=process_files,
+        inputs=[file_input],
+        outputs=[
+            download_btn,
+            output_df,
+            input_view,
+            result_view
+        ]
+    )
+
 
 if __name__ == "__main__":
     demo.launch(
