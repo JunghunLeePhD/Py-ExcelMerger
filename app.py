@@ -4,8 +4,11 @@ import tempfile
 
 
 def combine_files(files):
-    dfs = [pd.read_excel(file.name) for file in files]
-    return pd.concat(dfs, ignore_index=True)
+    try:
+        dfs = [pd.read_excel(file.name) for file in files]
+        return pd.concat(dfs, ignore_index=True)
+    except Exception as _:
+        return pd.DataFrame()
 
 
 def load_columns(files):
