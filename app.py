@@ -13,6 +13,16 @@ def process_files(files):
     )
 
 
+def reset_app():
+    return (
+        None,
+        None,
+        None,
+        gr.update(visible=True),
+        gr.update(visible=False)
+    )
+
+
 with gr.Blocks(title="Excel Manipulator") as demo:
     gr.Markdown("# 📊 Excel Manipulator")
 
@@ -40,6 +50,18 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         fn=process_files,
         inputs=[file_input],
         outputs=[
+            download_btn,
+            output_df,
+            input_view,
+            result_view
+        ]
+    )
+
+    reset_btn.click(
+        fn=reset_app,
+        inputs=[],
+        outputs=[
+            file_input,
             download_btn,
             output_df,
             input_view,
