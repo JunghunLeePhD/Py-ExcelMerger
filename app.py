@@ -8,6 +8,21 @@ def combine_files(files):
     return pd.concat(dfs, ignore_index=True)
 
 
+def load_columns(files):
+    try:
+        df_combined = combine_files(files)
+        return gr.update(
+            choices=df_combined.columns.tolist(),
+            value=[]
+        )
+
+    except Exception as _:
+        return gr.update(
+            choices=[],
+            value=[]
+        )
+
+
 def process_files(files):
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
     df_combined = combine_files(files)
@@ -40,6 +55,9 @@ with gr.Blocks(title="Excel Manipulator") as demo:
             file_types=[".xlsx", ".xls"]
         )
 
+        agg_checkbox = gr.CheckboxGroup(
+            label="Select Data Columns to Aggregate (Pool)", interactive=True)
+
         process_btn = gr.Button(
             "Process Files 🚀",
             variant="primary"
@@ -50,6 +68,12 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         reset_btn = gr.Button("🔄 Start Over")
         download_btn = gr.File(label="Download CSV")
         output_df = gr.DataFrame(label="Preview Result", interactive=False)
+
+    file_input.upload(
+        fn=load_columns,
+        inputs=file_input,
+        outputs=[agg_checkbox]
+    )
 
     process_btn.click(
         fn=process_files,
