@@ -52,6 +52,14 @@ def process_files(files):
 def reset_app():
     return (
         None,
+        gr.update(
+            value=[],
+            choices=[]
+        ),
+        gr.update(
+            choices=[],
+            value=None
+        ),
         None,
         None,
         gr.update(visible=True),
@@ -117,6 +125,8 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         inputs=[],
         outputs=[
             file_input,
+            agg_checkbox,
+            group_dropdown,
             download_btn,
             output_df,
             input_view,
