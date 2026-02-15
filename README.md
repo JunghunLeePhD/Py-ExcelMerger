@@ -28,13 +28,6 @@ A powerful, user-friendly web application to **merge, group, and aggregate** mul
 
 ---
 
-## 🌐 Live Demo
-
-Try the app directly on Hugging Face Spaces:
-**[👉 Click here to open Excel Manipulator](https://huggingface.co/spaces/JunghunleePhD/Py-ExcelManipulator)**
-
----
-
 ## 🛠️ Installation (Run Locally)
 
 If you prefer to run the app on your own computer instead of the cloud, follow these steps.
@@ -46,7 +39,7 @@ If you prefer to run the app on your own computer instead of the cloud, follow t
 ### **1. Clone the Repository**
 
 ```bash
-git clone [https://github.com/JunghunLeePhD/Py-ExcelManipulator.git](https://github.com/JunghunLeePhD/Py-ExcelManipulator.git)
+git clone git@github.com:JunghunLeePhD/Py-ExcelManipulator.git
 cd Py-ExcelManipulator
 ```
 
