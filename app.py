@@ -1,14 +1,7 @@
 import gradio as gr
 import pandas as pd
 import tempfile
-
-
-def combine_files(files):
-    try:
-        dfs = [pd.read_excel(file.name) for file in files]
-        return pd.concat(dfs, ignore_index=True)
-    except Exception as _:
-        return pd.DataFrame()
+from lib.utils import combine_files
 
 
 def load_columns(files):
