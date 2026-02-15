@@ -26,6 +26,18 @@ def load_columns(files):
         )
 
 
+def filter_dropdown(selected_cols):
+    if selected_cols:
+        return gr.update(
+            choices=selected_cols,
+            value=selected_cols[0]
+        )
+    return gr.update(
+        choices=[],
+        value=None
+    )
+
+
 def process_files(files):
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
     df_combined = combine_files(files)
@@ -61,6 +73,11 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         agg_checkbox = gr.CheckboxGroup(
             label="Select Data Columns to Aggregate (Pool)", interactive=True)
 
+        group_dropdown = gr.Dropdown(
+            label="Select Grouping Column",
+            interactive=True
+        )
+
         process_btn = gr.Button(
             "Process Files 🚀",
             variant="primary"
@@ -76,6 +93,12 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         fn=load_columns,
         inputs=file_input,
         outputs=[agg_checkbox]
+    )
+
+    agg_checkbox.change(
+        fn=filter_dropdown,
+        inputs=agg_checkbox,
+        outputs=group_dropdown
     )
 
     process_btn.click(
