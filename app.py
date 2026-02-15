@@ -31,7 +31,8 @@ def filter_dropdown(selected_cols):
     if selected_cols:
         return gr.update(
             choices=selected_cols,
-            value=selected_cols[0]
+            value=selected_cols[0],
+            visible=True
         )
     return gr.update(
         choices=[],
@@ -127,7 +128,8 @@ with gr.Blocks(title="Excel Manipulator") as demo:
 
         group_dropdown = gr.Dropdown(
             label="Select Grouping Column",
-            interactive=True
+            interactive=True,
+            visible=False
         )
 
         process_btn = gr.Button(
