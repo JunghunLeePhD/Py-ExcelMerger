@@ -86,11 +86,13 @@ def reset_app():
         None,
         gr.update(
             value=[],
-            choices=[]
+            choices=[],
+            visible=False
         ),
         gr.update(
             choices=[],
-            value=None
+            value=None,
+            visible=False
         ),
         None,
         None,
