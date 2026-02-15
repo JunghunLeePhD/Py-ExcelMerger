@@ -47,9 +47,8 @@ with gr.Blocks(title="Excel Manipulator") as demo:
 
     with gr.Column(visible=False) as result_view:
         gr.Markdown("### Step 2/2: Preview and Download Results")
-        with gr.Row():
-            download_btn = gr.File(label="Download CSV")
-            reset_btn = gr.Button("🔄 Start Over")
+        reset_btn = gr.Button("🔄 Start Over")
+        download_btn = gr.File(label="Download CSV")
         output_df = gr.DataFrame(label="Preview Result", interactive=False)
 
     process_btn.click(
