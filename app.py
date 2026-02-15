@@ -57,18 +57,15 @@ def process_files(files, agg_cols,  group_col):
 
     agg_cols_without_group_col = list(set(agg_cols) - set([group_col]))
     agg_cols_without_duplicate = agg_cols_without_group_col + [group_col]
-    df_combined = df_combined[agg_cols_without_duplicate]
 
-    agg_dict = {}
-    for cname in agg_cols_without_group_col:
-        if pd.api.types.is_numeric_dtype(df_combined[cname]):
-            agg_dict[cname] = 'sum'
-        else:
-            agg_dict[cname] = lambda x: x.mode(
-            )[0] if not x.mode().empty else None
+    agg_dict = {
+        k: "sum" if v in ['int32', 'float32', 'int64', 'float64'] else lambda x: x.mode()[
+            0] if not x.mode().empty else None
+        for k, v in df_combined[agg_cols_without_group_col].dtypes.to_dict().items()
+    }
 
     try:
-        df_result = df_combined.groupby(
+        df_result = df_combined[agg_cols_without_duplicate].groupby(
             [group_col]).agg(agg_dict).reset_index()
 
     except Exception as e:
