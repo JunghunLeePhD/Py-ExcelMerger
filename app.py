@@ -112,8 +112,10 @@ with gr.Blocks(title="Excel Manipulator") as demo:
             file_types=[".xlsx", ".xls"]
         )
 
-        agg_checkbox = gr.CheckboxGroup(
-            label="Select Data Columns to Aggregate (Pool)",
+        agg_dropdown = gr.Dropdown(
+            label="Select Data Columns to Aggregate",
+            info="Type to search",
+            multiselect=True,  
             interactive=True,
             visible=False
         )
@@ -138,12 +140,12 @@ with gr.Blocks(title="Excel Manipulator") as demo:
     file_input.upload(
         fn=load_columns,
         inputs=file_input,
-        outputs=[agg_checkbox]
+        outputs=agg_dropdown
     )
 
-    agg_checkbox.change(
+    agg_dropdown.change(
         fn=filter_dropdown,
-        inputs=agg_checkbox,
+        inputs=agg_dropdown,
         outputs=group_dropdown
     )
 
@@ -151,7 +153,7 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         fn=process_files,
         inputs=[
             file_input,
-            agg_checkbox,
+            agg_dropdown,
             group_dropdown
         ],
         outputs=[
@@ -167,7 +169,7 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         inputs=[],
         outputs=[
             file_input,
-            agg_checkbox,
+            agg_dropdown,
             group_dropdown,
             download_btn,
             output_df,
