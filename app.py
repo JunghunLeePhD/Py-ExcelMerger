@@ -38,12 +38,28 @@ def filter_dropdown(selected_cols):
     )
 
 
-def process_files(files):
+def process_files(files, agg_cols,  group_col):
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
     df_combined = combine_files(files)
+
+    agg_cols_without_group_col = list(set(agg_cols) - set([group_col]))
+    agg_cols_without_duplicate = agg_cols_without_group_col + [group_col]
+    df_combined = df_combined[agg_cols_without_duplicate]
+
+    agg_dict = {}
+    for cname in agg_cols_without_group_col:
+        if pd.api.types.is_numeric_dtype(df_combined[cname]):
+            agg_dict[cname] = 'sum'
+        else:
+            agg_dict[cname] = lambda x: x.mode(
+            )[0] if not x.mode().empty else None
+
+    df_result = df_combined.groupby([group_col]).agg(agg_dict).reset_index()
+    df_result.to_csv(temp_file.name, index=False)
+
     return (
         temp_file.name,
-        df_combined,
+        df_result,
         gr.update(visible=False),
         gr.update(visible=True)
     )
@@ -111,7 +127,11 @@ with gr.Blocks(title="Excel Manipulator") as demo:
 
     process_btn.click(
         fn=process_files,
-        inputs=[file_input],
+        inputs=[
+            file_input,
+            agg_checkbox,
+            group_dropdown
+        ],
         outputs=[
             download_btn,
             output_df,
