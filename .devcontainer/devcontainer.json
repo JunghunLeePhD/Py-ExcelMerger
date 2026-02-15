@@ -1,21 +1,25 @@
 {
-  "name": "Python Excel manipulator",
-  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "name": "Python 3.11 Slim",
+  "image": "python:3.11-slim",
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000",
+      "installZsh": true
+    }
   },
   "customizations": {
     "vscode": {
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",
         "python.linting.enabled": true,
-        "python.linting.pylintEnabled": true,
         "editor.formatOnSave": true
       },
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance",
-        "njpwerner.autodocstring"
+        "ms-python.vscode-pylance"
       ]
     }
   },
