@@ -16,7 +16,8 @@ def load_columns(files):
         df_combined = combine_files(files)
         return gr.update(
             choices=df_combined.columns.tolist(),
-            value=[]
+            value=[],
+            visible=True
         )
 
     except Exception as _:
@@ -119,7 +120,10 @@ with gr.Blocks(title="Excel Manipulator") as demo:
         )
 
         agg_checkbox = gr.CheckboxGroup(
-            label="Select Data Columns to Aggregate (Pool)", interactive=True)
+            label="Select Data Columns to Aggregate (Pool)",
+            interactive=True,
+            visible=False
+        )
 
         group_dropdown = gr.Dropdown(
             label="Select Grouping Column",
